@@ -3,10 +3,12 @@
 import { useState } from 'react'
 
 export default function Home() {
+
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
   async function login() {
+
     const req = await fetch('/api/login', {
       method: 'POST',
       headers: {
@@ -22,7 +24,6 @@ export default function Home() {
 
     if (res.token) {
       localStorage.setItem('token', res.token)
-      alert('Login berhasil')
       window.location.href = '/dashboard'
     } else {
       alert(res.message)
@@ -31,7 +32,7 @@ export default function Home() {
 
   return (
     <div style={{ padding: 40 }}>
-      <h1>VSL POS Login</h1>
+      <h1>VSL POS LOGIN</h1>
 
       <input
         placeholder="Username"
@@ -49,7 +50,7 @@ export default function Home() {
       <br /><br />
 
       <button onClick={login}>
-        Login
+        LOGIN
       </button>
     </div>
   )
