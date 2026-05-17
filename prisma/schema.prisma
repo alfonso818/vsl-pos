@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model admins {
+  id         BigInt   @id @default(autoincrement())
+  username   String   @unique
+  password   String
+  created_at DateTime @default(now())
+}
+
+model products {
+  id            BigInt   @id @default(autoincrement())
+  name          String
+  category      String?
+  price         Int
+  capital_price Int      @default(0)
+  stock         Int      @default(0)
+  created_at    DateTime @default(now())
+}
+
+model transactions {
+  id         BigInt              @id @default(autoincrement())
+  total      Int
+  created_at DateTime            @default(now())
+  items      transaction_items[]
+}
+
+model transaction_items {
+  id             BigInt       @id @default(autoincrement())
+  transaction_id BigInt
+  product_id     BigInt
+  qty            Int
+  price          Int
+
+  transaction transactions @relation(fields: [transaction_id], references: [id], onDelete: Cascade)
+}
